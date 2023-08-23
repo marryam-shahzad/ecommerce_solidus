@@ -1,0 +1,9 @@
+<!-- app/views/checkouts/payment/_store_credit.html.erb -->
+
+<div class="payment-method store-credit">
+ <h3>Store Credit Payment</h3>
+<% if @current_user && @current_user.respond_to?(:store_credits_total) %>
+  <p>Your store credit balance: <%= number_to_currency(current_user.store_credits_total) %></p>
+<% else %>
+  <p>You need to be logged in to view your store credit balance.</p>
+<% end %>

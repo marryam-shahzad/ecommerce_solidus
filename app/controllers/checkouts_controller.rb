@@ -10,6 +10,14 @@ class CheckoutsController < CheckoutBaseController
   before_action :check_registration
   before_action :setup_for_current_state
 
+  def edit
+    # You need to set the current_user here before rendering the view
+    @current_user = spree_current_user
+
+    # Render the checkout view as usual
+    render :edit
+  end
+
   # Updates the order and advances to the next state (when possible.)
   def update
     if update_order
@@ -54,6 +62,8 @@ class CheckoutsController < CheckoutBaseController
       @order.next
     end
   end
+
+  
 
   def finalize_order
     @current_order = nil

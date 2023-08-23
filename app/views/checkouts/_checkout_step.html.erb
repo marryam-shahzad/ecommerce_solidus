@@ -1,9 +1,16 @@
+<!-- app/views/checkouts/_checkout_step.html.erb -->
+
+
 <%= form_for order, url: update_checkout_path(order.state), html: { id: "checkout_form_#{order.state}" } do |form| %>
   <% if order.state == "address" || !order.email? %>
     <div class="text-input">
       <%= form.label :email, 'Customer E-Mail:' %>
       <%= form.email_field :email, required: true, placeholder: 'name@example.com' %>
     </div>
+  <% end %>
+
+  <% if order.state == "payment" %>
+    <%= render partial: 'checkouts/payment/store_credit', locals: { current_user: @current_user } %>
   <% end %>
 
   <%= render "checkouts/steps/#{order.state}_step", form: form, differentiator: @differentiator %>
