@@ -31,3 +31,12 @@
 
 en:
   hello: "Hello world"
+
+
+# en:
+#   spree:
+#     admin:
+#       payment:
+#         source_forms:
+#           store_credit:
+#             no_supported: "Store credit is not supported."
