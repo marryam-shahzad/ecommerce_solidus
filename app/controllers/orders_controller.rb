@@ -28,7 +28,8 @@ class OrdersController < StoreController
    def cancel
     order = Spree::Order.find(params[:id])
 
-    if order.shipment.ready?
+    # if order.shipment.ready?
+    if order.shipments.any?(&:ready?)
       flash[:error] = 'Cannot cancel order because the shipment is ready.'
     elsif order.cancel
       flash[:success] = 'Order has been cancelled.'
