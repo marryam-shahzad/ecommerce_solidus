@@ -72,6 +72,8 @@ Spree::Api::Config.configure do |config|
   config.requires_authentication = true
 end
 
+# Add the following line to allow order cancellation
+# Spree::Config.allow_canceling_orders = true
 
 # Rules for avoiding to store the current path into session for redirects
 # When at least one rule is matched, the request path will not be stored

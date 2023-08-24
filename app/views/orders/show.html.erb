@@ -15,7 +15,18 @@
     </legend>
 
     <%= render 'order_details', order: @order %>
+
+<% if @order.can_cancel? && @order.shipments.none?(&:ready?) %>
+  <%= form_tag(cancel_order_path(@order), method: :post, data: { confirm: 'Are you sure you want to cancel this order?' }) do %>
+    <%= button_tag 'Cancel Order', type: 'submit', class: 'btn btn-danger' %>
+  <% end %>
+<% end %>
+
+
+
   </fieldset>
+
+
 
   <div class="order-page__actions">
     <%= link_to t('spree.back_to_store'), root_path, class: "button" %>

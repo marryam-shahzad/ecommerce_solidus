@@ -57,6 +57,12 @@ Rails.application.routes.draw do
   resource :cart, only: [:show, :update] do
     put 'empty'
   end
+  resources :orders do
+    member do
+      post :cancel
+    end
+  end
+
 
   # route globbing for pretty nested taxon and product paths
   get '/t/*id', to: 'taxons#show', as: :nested_taxons
@@ -71,6 +77,10 @@ Rails.application.routes.draw do
   # We ask that you don't use the :as option here, as Solidus relies on it being the default of "spree"
   mount Spree::Core::Engine, at: '/'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+
+Spree::Core::Engine.routes.prepend do
+    post 'orders/:id/cancel', to: 'orders#cancel', as: :cancel_order
+  end
 
   # Defines the root path route ("/")
   # root "articles#index"
