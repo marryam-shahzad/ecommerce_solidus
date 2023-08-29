@@ -1,0 +1,186 @@
+<h1>Delivery Time</h1>
+<ul class="shipping-methods">
+  <% shipping_rates.each do |rate| %>
+    <li class="shipping-methods__rate">
+      <%= form.label :selected_shipping_rate_id, value: rate.id, class: "radio-input" do %>
+        <%= form.radio_button(:selected_shipping_rate_id, rate.id) %>
+        <%= "#{rate.name} #{rate.display_cost}" %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+
+
+
+
+
+
+<h1>Delivery Time</h1>
+
+<%= form.select(:selected_delivery_day, [['Today', 'today'], ['Tomorrow', 'tomorrow']], prompt: 'Select a day') %>
+
+<% if @selected_delivery_day == 'today' %>
+  <% today_time_slots = DeliveryTimeSlot.available_slots(Date.today) %>
+  <ul class="time-slots">
+    <% today_time_slots.each do |time_slot| %>
+      <li><%= time_slot.start_time.strftime('%I:%M %p') %> - <%= time_slot.end_time.strftime('%I:%M %p') %></li>
+    <% end %>
+  </ul>
+<% elsif @selected_delivery_day == 'tomorrow' %>
+  <% tomorrow_time_slots = DeliveryTimeSlot.available_slots(Date.tomorrow) %>
+  <ul class="time-slots">
+    <% tomorrow_time_slots.each do |time_slot| %>
+      <li><%= time_slot.start_time.strftime('%I:%M %p') %> - <%= time_slot.end_time.strftime('%I:%M %p') %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h1>Delivery Time</h1>
+<%= form.select(:selected_shipping_rate_id, [['Today', 'today'], ['Tomorrow', 'tomorrow']], prompt: 'Select a day') %>
+
+<% if @order.selected_delivery_day == 'today' %>
+  <% today_time_slots = DeliveryTimeSlot.available_slots(Date.today) %>
+  <ul class="time-slots">
+    <% today_time_slots.each do |time_slot| %>
+      <li>
+        <%= form.radio_button(:selected_delivery_time_slot_id, time_slot.id) %>
+        <%= "#{time_slot.start_time.strftime('%I:%M %p')} - #{time_slot.end_time.strftime('%I:%M %p')}" %>
+      </li>
+    <% end %>
+  </ul>
+<% elsif @order.selected_delivery_day == 'tomorrow' %>
+  <% tomorrow_time_slots = DeliveryTimeSlot.available_slots(Date.tomorrow) %>
+  <ul class="time-slots">
+    <% tomorrow_time_slots.each do |time_slot| %>
+      <li>
+        <%= form.radio_button(:selected_delivery_time_slot_id, time_slot.id) %>
+        <%= "#{time_slot.start_time.strftime('%I:%M %p')} - #{time_slot.end_time.strftime('%I:%M %p')}" %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
+<ul class="shipping-methods">
+  <% shipping_rates.each do |rate| %>
+    <li class="shipping-methods__rate">
+      <%= form.label :selected_shipping_rate_id, value: rate.id, class: "radio-input" do %>
+        <%= form.radio_button(:selected_shipping_rate_id, rate.id) %>
+        <%= "#{rate.name} #{rate.display_cost}" %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+
+<h1>Delivery Time</h1>
+<%= form.select(:selected_shipping_rate_id, [['Today', 'today'], ['Tomorrow', 'tomorrow']], prompt: 'Select a day') %>
+
+<% selected_delivery_day = @order.try(:selected_shipping_rate_id) %>
+<% if @order.selected_delivery_day == 'today' %>
+  <% available_day = Date.today %>
+<% elsif @order.selected_delivery_day == 'tomorrow' %>
+  <% available_day = Date.tomorrow %>
+<% else %>
+  <% available_day = nil %>
+<% end %>
+
+<% if available_day && available_day.strftime('%A') == 'Friday' %>
+  <p>Only 2 shipping methods available on Fridays.</p>
+  <ul class="shipping-methods">
+    <li class="shipping-methods__rate">
+      <%= form.label :selected_shipping_rate_id, value: shipping_rates.first.id, class: "radio-input" do %>
+        <%= form.radio_button(:selected_shipping_rate_id, shipping_rates.first.id) %>
+        <%= "#{shipping_rates.first.name} #{shipping_rates.first.display_cost}" %>
+      <% end %>
+    </li>
+    <li class="shipping-methods__rate">
+      <%= form.label :selected_shipping_rate_id, value: shipping_rates.second.id, class: "radio-input" do %>
+        <%= form.radio_button(:selected_shipping_rate_id, shipping_rates.second.id) %>
+        <%= "#{shipping_rates.second.name} #{shipping_rates.second.display_cost}" %>
+      <% end %>
+    </li>
+  </ul>
+<% elsif available_day %>
+  <ul class="shipping-methods">
+    <% shipping_rates.each do |rate| %>
+      <li class="shipping-methods__rate">
+        <%= form.label :selected_shipping_rate_id, value: rate.id, class: "radio-input" do %>
+          <%= form.radio_button(:selected_shipping_rate_id, rate.id) %>
+          <%= "#{rate.name} #{rate.display_cost}" %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Select a day to see available shipping methods.</p>
+<% end %>
+
+
+
+
+
+
+
+
+
+<h1>Delivery Time</h1>
+<%= form.select(:selected_shipping_rate_id, [['Today', 'today'], ['Tomorrow', 'tomorrow']], prompt: 'Select a day') %>
+
+<% selected_shipping_rate_id = params.dig(:order, :selected_shipping_rate_id) %>
+<% if selected_shipping_rate_id == 'today' %>
+  <% available_day = Date.today %>
+<% elsif selected_shipping_rate_id == 'tomorrow' %>
+  <% available_day = Date.tomorrow %>
+<% else %>
+  <% available_day = nil %>
+<% end %>
+
+<% if available_day && available_day.strftime('%A') == 'Friday' %>
+  <p>Only 2 shipping methods available on Fridays.</p>
+  <ul class="shipping-methods">
+    <li class="shipping-methods__rate">
+      <%= form.label :selected_shipping_rate_id, value: shipping_rates.first.id, class: "radio-input" do %>
+        <%= form.radio_button(:selected_shipping_rate_id, shipping_rates.first.id) %>
+        <%= "#{shipping_rates.first.name} #{shipping_rates.first.display_cost}" %>
+      <% end %>
+    </li>
+    <li class="shipping-methods__rate">
+      <%= form.label :selected_shipping_rate_id, value: shipping_rates.second.id, class: "radio-input" do %>
+        <%= form.radio_button(:selected_shipping_rate_id, shipping_rates.second.id) %>
+        <%= "#{shipping_rates.second.name} #{shipping_rates.second.display_cost}" %>
+      <% end %>
+    </li>
+  </ul>
+<% elsif available_day %>
+  <ul class="shipping-methods">
+    <% shipping_rates.each do |rate| %>
+      <li class="shipping-methods__rate">
+        <%= form.label :selected_shipping_rate_id, value: rate.id, class: "radio-input" do %>
+          <%= form.radio_button(:selected_shipping_rate_id, rate.id) %>
+          <%= "#{rate.name} #{rate.display_cost}" %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Select a day to see available shipping methods.</p>
+<% end %>

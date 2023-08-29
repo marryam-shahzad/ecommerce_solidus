@@ -12,33 +12,57 @@ class CheckoutsController < CheckoutBaseController
 
   def edit
     # You need to set the current_user here before rendering the view
-    @current_user = spree_current_user
+     @current_user = spree_current_user
+    @order = current_order
 
     # Render the checkout view as usual
     render :edit
   end
 
-  # Updates the order and advances to the next state (when possible.)
-  def update
-    if update_order
+  # # Updates the order and advances to the next state (when possible.)
+  # def update
+  #   if update_order
 
-      assign_temp_address
+  #     assign_temp_address
 
-      unless transition_forward
-        redirect_on_failure
-        return
-      end
+  #     unless transition_forward
+  #       redirect_on_failure
+  #       return
+  #     end
 
-      if @order.completed?
-        finalize_order
-      else
-        send_to_next_state
-      end
+  #     if @order.completed?
+  #       finalize_order
+  #     else
+  #       send_to_next_state
+  #     end
 
-    else
-      render :edit
+  #   else
+  #     render :edit
+  #   end
+  #   @selected_delivery_day = params[:order][:selected_delivery_day]
+  # end
+def update
+  if update_order
+
+    assign_temp_address
+
+    unless transition_forward
+      redirect_on_failure
+      return
     end
+
+    if @order.completed?
+      finalize_order
+    else
+      send_to_next_state
+    end
+
+  else
+    render :edit
   end
+
+  # @order.update(selected_delivery_day: params[:order][:selected_delivery_day])
+end
 
   private
 
@@ -168,9 +192,7 @@ class CheckoutsController < CheckoutBaseController
   end
 
   def order_params
-    params.
-      fetch(:order, {}).
-      permit(:email)
+      params.fetch(:order, {}).permit(:email).require(:order).permit(:selected_delivery_day)
   end
 
   # HACK: We can't remove `skip_state_validation?` as of now because it is

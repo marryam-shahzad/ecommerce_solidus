@@ -1,6 +1,7 @@
-<h1>Delivery Time</h1>
+<!-- app/views/orders/_shipping_methods_tomorrow.html.erb -->
+<!-- Display shipping methods for tomorrow -->
 <ul class="shipping-methods">
-  <% shipping_rates.each do |rate| %>
+  <% shipping_rates_for_tomorrow.each do |rate| %>
     <li class="shipping-methods__rate">
       <%= form.label :selected_shipping_rate_id, value: rate.id, class: "radio-input" do %>
         <%= form.radio_button(:selected_shipping_rate_id, rate.id) %>
@@ -9,5 +10,3 @@
     </li>
   <% end %>
 </ul>
-
-

@@ -6,9 +6,7 @@
 
   <%= render "checkouts/steps/delivery_step/shipment_items", shipment_items: ship_form.object.manifest %>
 
-  <h3 class="proposed-shipment__secondary-title">
-    <%= t('spree.shipping_method') %>:
-  </h3>
+
 
   <%= render(
     "checkouts/steps/delivery_step/shipping_methods",

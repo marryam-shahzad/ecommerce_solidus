@@ -1,0 +1,10 @@
+<h1>Select Delivery Time Slot</h1>
+
+<%= form_for @order, url: create_order_path do |f| %>
+  <div class="field">
+    <%= f.label :delivery_time_slot_id %>
+    <%= f.collection_select :delivery_time_slot_id, DeliveryTimeSlot.where('available_slots > 0'), :id, :display_name %>
+  </div>
+
+  <%= f.submit 'Proceed with Order' %>
+<% end %>

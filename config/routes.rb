@@ -50,9 +50,13 @@ Rails.application.routes.draw do
 
   get '/orders/:id/token/:token' => 'orders#show', as: :token_order
 
+#   resources :orders do
+#   get 'update_shipping_methods', on: :collection
+# end
   resources :orders, only: :show do
     resources :coupon_codes, only: :create
   end
+
 
   resource :cart, only: [:show, :update] do
     put 'empty'
@@ -62,6 +66,7 @@ Rails.application.routes.draw do
       post :cancel
     end
   end
+
 
 
   # route globbing for pretty nested taxon and product paths

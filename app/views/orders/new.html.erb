@@ -1,0 +1,6 @@
+<!-- app/views/orders/new.html.erb -->
+<h1>Delivery Time</h1>
+<%= form_for @order do |f| %>
+  <%= f.select(:selected_shipping_day, [['Today', 'today'], ['Tomorrow', 'tomorrow']], prompt: 'Select a day') %>
+  <%= render partial: 'shipping_methods', locals: { order: @order } %>
+<% end %>

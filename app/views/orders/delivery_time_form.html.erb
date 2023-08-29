@@ -1,0 +1,39 @@
+<!-- app/views/orders/delivery_time_form.html.erb -->
+<h1>Delivery Time</h1>
+<%= form_for @order, url: update_shipping_methods_order_path(@order), remote: true do |f| %>
+  <%= f.select(:selected_shipping_day, [['Today', 'today'], ['Tomorrow', 'tomorrow']], prompt: 'Select a day', id: 'delivery-day-select') %>
+  <%= f.submit 'Show Shipping Methods', id: 'show-shipping-methods' %>
+<% end %>
+
+<div id="shipping-methods-container">
+  <!-- Shipping methods will be displayed here based on user's selection -->
+</div>
+
+<script>
+  $(document).ready(function() {
+    $("#show-shipping-methods").on("click", function(e) {
+      e.preventDefault();
+      var selectedDay = $("#delivery-day-select").val();
+
+      if (selectedDay === 'today') {
+        // Fetch and display shipping methods for today
+        $.ajax({
+          url: "<%= shipping_rates_for_today_order_path(@order) %>",
+          method: "GET",
+          success: function(response) {
+            $("#shipping-methods-container").html(response);
+          }
+        });
+      } else if (selectedDay === 'tomorrow') {
+        // Fetch and display shipping methods for tomorrow
+        $.ajax({
+          url: "<%= shipping_rates_for_tomorrow_order_path(@order) %>",
+          method: "GET",
+          success: function(response) {
+            $("#shipping-methods-container").html(response);
+          }
+        });
+      }
+    });
+  });
+</script>
