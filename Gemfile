@@ -32,6 +32,10 @@ gem 'solidus'
 gem 'solidus_auth_devise' # For user authentication
 gem 'solidus_starter_frontend'
 
+gem "slot_machine"
+gem 'business_time'
+
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 

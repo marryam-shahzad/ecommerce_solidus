@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_28_085557) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_30_060120) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -1226,10 +1226,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_28_085557) do
     t.datetime "updated_at"
   end
 
+  create_table "time_slots", force: :cascade do |t|
+    t.datetime "start_time", precision: nil
+    t.datetime "end_time", precision: nil
+    t.integer "available_slots_count"
+    t.text "schedule"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "spree_orders", "delivery_slots"
-  add_foreign_key "spree_orders", "delivery_time_slots"
   add_foreign_key "spree_promotion_code_batches", "spree_promotions", column: "promotion_id"
   add_foreign_key "spree_promotion_codes", "spree_promotion_code_batches", column: "promotion_code_batch_id"
   add_foreign_key "spree_tax_rate_tax_categories", "spree_tax_categories", column: "tax_category_id"

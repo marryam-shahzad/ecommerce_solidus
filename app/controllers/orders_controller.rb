@@ -12,7 +12,7 @@ class OrdersController < StoreController
 
   def create
     @order = Order.new(order_params)
-    @order.delivery_time_slot = DeliveryTimeSlot.find(params[:order][:delivery_time_slot_id])
+    # @order.delivery_time_slot = DeliveryTimeSlot.find(params[:order][:delivery_time_slot_id])
 
     if @order.save
       redirect_to @order, notice: 'Order was successfully created.'

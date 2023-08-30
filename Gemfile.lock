@@ -87,6 +87,9 @@ GEM
     bootsnap (1.16.0)
       msgpack (~> 1.2)
     builder (3.2.4)
+    business_time (0.13.0)
+      activesupport (>= 3.2.0)
+      tzinfo
     cancancan (3.5.0)
     canonical-rails (0.2.14)
       rails (>= 4.1, <= 7.1)
@@ -350,6 +353,7 @@ GEM
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
+    slot_machine (0.1.2)
     solidus (4.1.1)
       solidus_api (= 4.1.1)
       solidus_backend (= 4.1.1)
@@ -465,6 +469,7 @@ PLATFORMS
 
 DEPENDENCIES
   bootsnap
+  business_time
   canonical-rails
   capybara
   capybara-screenshot (~> 1.0)
@@ -487,6 +492,7 @@ DEPENDENCIES
   rubocop-rails (~> 2.3)
   rubocop-rspec (~> 2.0)
   selenium-webdriver
+  slot_machine
   solidus
   solidus_auth_devise
   solidus_starter_frontend
