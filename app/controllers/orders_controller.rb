@@ -86,7 +86,8 @@ def shipping_rates_for_today
  def order_params
     # params.require(:order).permit()
     # params.require(:order).permit(:other_attributes, :selected_shipping_day, :selected_shipping_rate_id, :other_order_params)
-    params.require(:order).permit(:other_attributes, :selected_shipping_day, :selected_shipping_rate_id, :other_order_params)
+    params.require(:order).permit(:other_attributes, :selected_shipping_day, :selected_shipping_rate_id, :other_order_params, :delivery_time_slot_id)
+    # params.require(:order).permit(:selected_delivery_day, :delivery_time_slot_id)
   end
   def accurate_title
     t('spree.order_number', number: @order.number)

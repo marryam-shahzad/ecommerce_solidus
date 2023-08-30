@@ -1,5 +1,8 @@
-# app/models/order.rb
+# app/models/spree/order.rb
 class Order < ApplicationRecord
-  belongs_to :delivery_time_slot, class_name: 'DeliveryTimeSlot'
-  # ... other associations and code
+  # ...
+  has_one :delivery_time_slot_id
+  accepts_nested_attributes_for :delivery_time_slot_id  # If you're using nested attributes
+
+  attr_accessible :delivery_time_slot_id, ...  # Add :delivery_time_slot_id to the list
 end

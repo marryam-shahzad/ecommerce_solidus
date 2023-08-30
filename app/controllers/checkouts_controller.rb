@@ -14,9 +14,16 @@ class CheckoutsController < CheckoutBaseController
     # You need to set the current_user here before rendering the view
      @current_user = spree_current_user
     @order = current_order
+    @delivery_time_slots = DeliveryTimeSlot.all
+    @available_time_slots = DeliveryTimeSlot.where('available_slots > 0')
+
 
     # Render the checkout view as usual
     render :edit
+  end
+  def show
+    @delivery_time_slots = DeliveryTimeSlot.all
+    # ... other code ...
   end
 
   # # Updates the order and advances to the next state (when possible.)

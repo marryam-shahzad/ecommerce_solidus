@@ -18,6 +18,11 @@
         <%= form.text_area :special_instructions %>
       </div>
     <% end %>
+
+        <!-- Render the delivery time slot radio buttons partial -->
+    <%= form.select :delivery_time_slot_id, options_for_select(@available_time_slots.map { |slot| [slot.start_time.strftime('%I:%M %p') + ' - ' + slot.end_time.strftime('%I:%M %p'), slot.id] }) %>
+
+
   </fieldset>
 
   <%= form.button(

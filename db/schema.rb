@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_30_064836) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_30_065258) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -59,6 +59,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_30_064836) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "delivery_time_slots", force: :cascade do |t|
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.integer "available_slots"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
@@ -342,10 +350,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_30_064836) do
     t.string "approver_name"
     t.boolean "frontend_viewable", default: true, null: false
     t.string "selected_delivery_day"
+    t.bigint "delivery_time_slot_id"
     t.index ["approver_id"], name: "index_spree_orders_on_approver_id"
     t.index ["bill_address_id"], name: "index_spree_orders_on_bill_address_id"
     t.index ["completed_at"], name: "index_spree_orders_on_completed_at"
     t.index ["created_by_id"], name: "index_spree_orders_on_created_by_id"
+    t.index ["delivery_time_slot_id"], name: "index_spree_orders_on_delivery_time_slot_id"
     t.index ["guest_token"], name: "index_spree_orders_on_guest_token"
     t.index ["number"], name: "index_spree_orders_on_number"
     t.index ["ship_address_id"], name: "index_spree_orders_on_ship_address_id"
@@ -1216,6 +1226,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_30_064836) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "spree_orders", "delivery_time_slots"
   add_foreign_key "spree_promotion_code_batches", "spree_promotions", column: "promotion_id"
   add_foreign_key "spree_promotion_codes", "spree_promotion_code_batches", column: "promotion_code_batch_id"
   add_foreign_key "spree_tax_rate_tax_categories", "spree_tax_categories", column: "tax_category_id"

@@ -1,5 +1,5 @@
 class DeliveryTimeSlot < ApplicationRecord
-  has_many :spree_orders, class_name: 'Spree::Order', foreign_key: 'delivery_slot_id'
+  has_many :spree_orders, class_name: 'Order', foreign_key: 'delivery_time_slot_id'
 end
 
 

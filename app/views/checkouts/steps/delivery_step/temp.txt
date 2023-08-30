@@ -71,6 +71,10 @@
 
 
 
+
+
+
+
 <h1>Delivery Time</h1>
 <%= form.select(:selected_shipping_rate_id, [['Today', 'today'], ['Tomorrow', 'tomorrow']], prompt: 'Select a day') %>
 
@@ -200,3 +204,7 @@
 <% else %>
   <p>Select a day to see available shipping methods.</p>
 <% end %>
+
+
+
+    <%= render 'checkouts/steps/delivery_step/delivery_time_slots' %>

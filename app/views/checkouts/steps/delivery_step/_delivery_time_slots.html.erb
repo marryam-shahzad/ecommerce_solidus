@@ -1,0 +1,16 @@
+<!-- app/views/checkouts/steps/delivery_step/_delivery_time_slots.html.erb -->
+
+
+
+<!-- app/views/checkouts/steps/delivery_step/_delivery_time_slots.html.erb -->
+<h3>Select a delivery time slot:</h3>
+<% @delivery_time_slots.each do |time_slot| %>
+  <label>
+    <%= radio_button_tag 'order[delivery_time_slot_id]', time_slot.id %>
+    <%= time_slot.start_time %> - <%= time_slot.end_time %>
+  </label>
+  <br>
+<% end %>
+
+
+
