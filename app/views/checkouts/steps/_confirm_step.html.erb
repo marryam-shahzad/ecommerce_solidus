@@ -15,19 +15,7 @@
 
 
 
-<!-- Show selected delivery time slot -->
-<% if @order.delivery_time_slot_id.present? %>
-  <% delivery_time_slot = DeliveryTimeSlot.find(@order.delivery_time_slot_id) %>
-  <div class="selected-delivery-time-slot">
-    <p><strong>Selected Delivery Time Slot:</strong></p>
-    <p><%= delivery_time_slot.start_time %> - <%= delivery_time_slot.end_time %></p>
-  </div>
-<% else %>
-  <div class="no-delivery-time-selected">
-    <p>No delivery time slot selected.</p>
-  </div>
-<% end %>
-
+  
   <%= button_tag(
     I18n.t('spree.place_order'),
     class: 'button-primary',

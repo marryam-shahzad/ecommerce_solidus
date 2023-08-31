@@ -1,0 +1,11 @@
+<% if @order.delivery_time_slot_id.present? %>
+  <% delivery_time_slot = DeliveryTimeSlot.find(@order.delivery_time_slot_id) %>
+  <div class="selected-delivery-time-slot">
+    <p><strong>Delivery Time:</strong></p>
+    <p><%= delivery_time_slot.start_time.localtime.strftime('%I:%M %p') %> - <%= delivery_time_slot.end_time.localtime.strftime('%I:%M %p') %></p>
+  </div>
+<% else %>
+  <div class="no-delivery-time-selected">
+    <p>No delivery time slot selected.</p>
+  </div>
+<% end %>

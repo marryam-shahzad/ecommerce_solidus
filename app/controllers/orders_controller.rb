@@ -7,12 +7,13 @@ class OrdersController < StoreController
 
   def new
     @order = Order.new
-    render 'select_delivery_time_slot'
+    render 'delivery_time_slot'
   end
 
   def create
     @order = Order.new(order_params)
     # @order.delivery_time_slot = DeliveryTimeSlot.find(params[:order][:delivery_time_slot_id])
+    @order.update(delivery_time_slot_id: params[:order][:delivery_time_slot_id])
 
     if @order.save
       redirect_to @order, notice: 'Order was successfully created.'
@@ -32,7 +33,9 @@ class OrdersController < StoreController
   def show
     @order = Spree::Order.find_by!(number: params[:id])
     authorize! :show, @order, cookies.signed[:guest_token]
+    
   end
+
 
   def submit
     selected_shipping_rate_id = params.dig(:order, :selected_shipping_rate_id)

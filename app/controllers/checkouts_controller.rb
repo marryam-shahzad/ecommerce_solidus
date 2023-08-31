@@ -15,7 +15,7 @@ class CheckoutsController < CheckoutBaseController
      @current_user = spree_current_user
     @order = current_order
     @delivery_time_slots = DeliveryTimeSlot.all
-    @available_time_slots = DeliveryTimeSlot.where('available_slots > 0')
+    # @available_time_slots = DeliveryTimeSlot.where('available_slots > 0')
 
 
     # Render the checkout view as usual
@@ -49,6 +49,7 @@ class CheckoutsController < CheckoutBaseController
   #   @selected_delivery_day = params[:order][:selected_delivery_day]
   # end
 def update
+  logger.debug "Received params: #{params.inspect}"
   if update_order
 
     assign_temp_address
@@ -63,7 +64,7 @@ def update
     else
       send_to_next_state
     end
-
+# @order.update(delivery_time_slot_id: params[:order][:delivery_time_slot_id])
   else
     render :edit
   end
@@ -111,26 +112,27 @@ end
     redirect_to checkout_state_path(@order.state)
   end
 
-  def update_params
-    case params[:state].to_sym
-    when :address
-      massaged_params.require(:order).permit(
-        permitted_checkout_address_attributes
-      )
-    when :delivery
-      massaged_params.require(:order).permit(
-        permitted_checkout_delivery_attributes
-      )
-    when :payment
-      massaged_params.require(:order).permit(
-        permitted_checkout_payment_attributes
-      )
-    else
-      massaged_params.fetch(:order, {}).permit(
-        permitted_checkout_confirm_attributes
-      )
-    end
+ def update_params
+  case params[:state].to_sym
+  when :address
+    massaged_params.require(:order).permit(
+      permitted_checkout_address_attributes
+    )
+  when :delivery
+    massaged_params.require(:order).permit(
+      permitted_checkout_delivery_attributes,
+      :delivery_time_slot_id  # Add this line
+    )
+  when :payment
+    massaged_params.require(:order).permit(
+      permitted_checkout_payment_attributes
+    )
+  else
+    massaged_params.fetch(:order, {}).permit(
+      permitted_checkout_confirm_attributes
+    )
   end
+end
 
   def massaged_params
     massaged_params = params.deep_dup
@@ -198,9 +200,9 @@ end
     end
   end
 
-  def order_params
-      params.fetch(:order, {}).permit(:email).require(:order).permit(:selected_delivery_day)
-  end
+ def order_params
+  params.fetch(:order, {}).permit(:email, :selected_delivery_day, :delivery_time_slot_id)  # Add :delivery_time_slot_id
+end
 
   # HACK: We can't remove `skip_state_validation?` as of now because it is
   # stubbed in some system tests.

@@ -2,12 +2,13 @@
   <h3 class="order-shipments__title">
     <%= title %>
   </h3>
-
   <%= link_to(
     "[#{t('spree.actions.edit')}]",
     checkout_state_path(:delivery),
     { class: 'order-shipments__edit' }
   ) unless @order.completed? %>
+
+
 
   <ul class="order-shipments__info">
     <% order.shipments.each do |shipment| %>

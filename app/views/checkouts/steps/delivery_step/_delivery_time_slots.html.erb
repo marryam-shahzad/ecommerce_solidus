@@ -1,16 +1,57 @@
-<!-- app/views/checkouts/steps/delivery_step/_delivery_time_slots.html.erb -->
-
-
-
-<!-- app/views/checkouts/steps/delivery_step/_delivery_time_slots.html.erb -->
 <h3>Select a delivery time slot:</h3>
-<% @delivery_time_slots.each do |time_slot| %>
-  <label>
-    <%= radio_button_tag 'order[delivery_time_slot_id]', time_slot.id %>
-    <%= time_slot.start_time %> - <%= time_slot.end_time %>
-  </label>
-  <br>
+<% current_time = Time.now %>
+<% max_allowed_time = Time.parse('11:00 PM') %>
+<% time_slots_to_display = @delivery_time_slots.select do |time_slot|
+  if today_is_friday? && allowed_friday_slots.include?(time_slot.id)
+    current_time < time_slot.start_time && time_slot.end_time <= max_allowed_time
+  else
+    current_time < time_slot.start_time && time_slot.end_time <= max_allowed_time
+  end
+end %>
+
+<% if time_slots_to_display.empty? %>
+  <p>No available delivery time slots.</p>
+<% else %>
+  <% time_slots_to_display.each do |time_slot| %>
+    <label>
+      <%= radio_button_tag 'order[delivery_time_slot_id]', time_slot.id %>
+      <%= time_slot.start_time.localtime.strftime('%I:%M %p') %> - <%= time_slot.end_time.localtime.strftime('%I:%M %p') %>
+    </label>
+    <br>
+  <% end %>
 <% end %>
 
 
 
+<h3>Select a delivery time slot:</h3>
+<% current_time = Time.now %>
+<% max_allowed_time = Time.parse('11:00 PM') %>
+<% time_slots_to_display = @delivery_time_slots.select do |time_slot|
+  if today_is_friday?
+    puts "Friday: #{time_slot.id} - Start: #{time_slot.start_time}, End: #{time_slot.end_time}"
+    allowed_friday_slots.include?(time_slot.id) && time_slot.start_time >= current_time && time_slot.end_time <= max_allowed_time
+  else
+    puts "Not Friday: #{time_slot.id} - Start: #{time_slot.start_time}, End: #{time_slot.end_time}"
+    time_slot.start_time >= current_time && time_slot.end_time <= max_allowed_time
+  end
+end %>
+
+<% if time_slots_to_display.empty? %>
+  <p>No available delivery time slots.</p>
+<% else %>
+  <% time_slots_to_display.each do |time_slot| %>
+    <label>
+      <%= radio_button_tag 'order[delivery_time_slot_id]', time_slot.id %>
+      <%= time_slot.start_time.localtime.strftime('%I:%M %p') %> - <%= time_slot.end_time.localtime.strftime('%I:%M %p') %>
+    </label>
+    <br>
+  <% end %>
+<% end %>
+
+
+
+
+<%= @delivery_time_slots.inspect %>
+<%= today_is_friday?.inspect %>
+<%= allowed_friday_slots.inspect %>
+<%= time_slots_to_display.inspect%>
