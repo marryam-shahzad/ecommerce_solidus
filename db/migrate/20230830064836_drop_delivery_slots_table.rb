@@ -1,4 +1,4 @@
-class DropDeliverySlotsTable < ActiveRecord::Migration[7.0]
+rclass DropDeliverySlotsTable < ActiveRecord::Migration[7.0]
   def up
     drop_table :delivery_slots
   end

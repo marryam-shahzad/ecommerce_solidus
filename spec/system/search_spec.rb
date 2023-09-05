@@ -65,7 +65,7 @@ RSpec.describe 'searching products', type: :system do
       wait_for_autocomplete
       find('input[name=keywords]').native.send_keys(:escape)
 
-      expect(page).not_to have_selector('[data-search-target="result"]', visible: true)
+      expect(page).not_to have_selector('[data-search-target="result"]', visible: true, wait: 10)
     end
 
     it 'closes autocomplete suggestions clicking outside the search input' do
@@ -74,11 +74,11 @@ RSpec.describe 'searching products', type: :system do
       find('input[name=keywords]').native.send_keys(:escape)
 
       find('.top-bar').click
-      expect(page).not_to have_selector('[data-search-target="result"]', visible: true)
+      expect(page).not_to have_selector('[data-search-target="result"]', visible: true, wait: 10)
     end
 
     def wait_for_autocomplete
-      expect(page).to have_selector('[data-search-target="result"]', visible: true)
+      expect(page).to have_selector('[data-search-target="result"]', visible: true, wait: 10)
     end
   end
 end

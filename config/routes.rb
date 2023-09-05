@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  # This line installs graphql's main route to execute queries
+
+  mount SolidusGraphqlApi::Engine, at: '/graphql'
+  SolidusGraphqlApi::Engine.routes.draw do
+  post '/', to: 'graphql#execute'
+end
   root to: 'home#index'
 
   devise_for(:user, {

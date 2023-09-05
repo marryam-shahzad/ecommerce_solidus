@@ -31,9 +31,9 @@ gem "jbuilder"
 gem 'solidus'
 gem 'solidus_auth_devise' # For user authentication
 gem 'solidus_starter_frontend'
-
-gem "slot_machine"
-gem 'business_time'
+gem 'solidus_graphql_api'
+# gem "slot_machine"
+# gem 'business_time'
 
 
 # Use Redis adapter to run Action Cable in production
@@ -102,3 +102,5 @@ group :development, :test do
   gem "rubocop-rails", "~> 2.3"
   gem "rubocop-rspec", "~> 2.0"
 end
+
+# gem "rack-cors", "~> 2.0"

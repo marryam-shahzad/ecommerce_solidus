@@ -20,6 +20,8 @@ module ShopshopPostgresql
 
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
+    config.time_zone = 'Islamabad'
+
 
     # Configuration for the application, engines, and railties goes here.
     #
